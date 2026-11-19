@@ -8,6 +8,13 @@ package pong;
  * Si vince un livello vincendo una partita; perdendo una partita si perde una vita.
  */
 public class Livelli {
+    private final int numeroLivelli;
+    private final int vite;
+    private final Lato umano;
+    private int livelloAttuale;
+    private int viteAttuali;
+    private boolean completato;
+
     /**
      * Un gioco nuovo.
      * Pretende: niente.
@@ -15,41 +22,54 @@ public class Livelli {
      * Lancia IllegalArgumentException se numeroLivelli o vite è minore di 1, o se umano è null.
      */
     public Livelli(int numeroLivelli, int vite, Lato umano) {
-        throw new UnsupportedOperationException("da scrivere");
+        if(numeroLivelli < 1)
+            throw new IllegalArgumentException("numeroLivelli deve essere maggiore o uguale a 1");
+        if(vite < 1)
+            throw new IllegalArgumentException("vite deve essere maggiore o uguale a 1");
+        if(umano == null)
+            throw new IllegalArgumentException("umano deve essere diverso da null");
+
+        this.numeroLivelli = numeroLivelli;
+        this.vite = vite;
+        this.umano = umano;
+        this.livelloAttuale = 1;
+        this.viteAttuali = vite;
+        this.completato = false;
     }
 
     /** Il livello a cui si gioca, fra 1 e getNumeroLivelli(). */
     public int getLivello() {
-        throw new UnsupportedOperationException("da scrivere");
+        return livelloAttuale;
     }
 
+    /** Quanti livelli ha il gioco. */
     public int getNumeroLivelli() {
-        throw new UnsupportedOperationException("da scrivere");
+        return numeroLivelli;
     }
 
     /** Le vite che restano, fra 0 e quelle iniziali. */
     public int getVite() {
-        throw new UnsupportedOperationException("da scrivere");
+        return viteAttuali;
     }
 
     /** Il lato su cui gioca la persona (l'altro è il giocatore automatico). */
     public Lato getUmano() {
-        throw new UnsupportedOperationException("da scrivere");
+        return umano; // scrivete qui
     }
 
     /** Vero se è stato vinto l'ultimo livello. */
     public boolean isCompletato() {
-        throw new UnsupportedOperationException("da scrivere");
+        return completato;
     }
 
     /** Vero se le vite sono finite. */
     public boolean isPerso() {
-        throw new UnsupportedOperationException("da scrivere");
+        return getVite() <= 0;
     }
 
     /** Vero se il gioco è completato o perso. */
     public boolean isFinito() {
-        throw new UnsupportedOperationException("da scrivere");
+        return isCompletato() || isPerso();
     }
 
     /**
@@ -63,7 +83,18 @@ public class Livelli {
      * Lancia IllegalArgumentException se vincitore è null, e non cambia niente.
      */
     public void partitaFinita(Lato vincitore) {
-        throw new UnsupportedOperationException("da scrivere");
+        if(vincitore == null)
+            throw new IllegalArgumentException("vincitore non deve essere null");
+
+        if(!isFinito()){
+            if(vincitore == umano){
+                if(livelloAttuale == numeroLivelli)
+                    completato = true;
+                else 
+                    livelloAttuale ++;
+            }else 
+                viteAttuali--;
+        }
     }
 
     /**
@@ -72,7 +103,9 @@ public class Livelli {
      * Promette: livello 1, con tutte le vite; il gioco non è completato né perso.
      */
     public void ricomincia() {
-        throw new UnsupportedOperationException("da scrivere");
+        livelloAttuale = 1;
+        viteAttuali = vite;
+        completato = false;
     }
 
     /**
@@ -82,6 +115,9 @@ public class Livelli {
      *           ma mai più delle vite iniziali: con tutte le vite, non cambia niente. Il livello non cambia.
      */
     public void guadagnaVita() {
-        throw new UnsupportedOperationException("da scrivere");
+        if(!isFinito() && viteAttuali < vite){
+            viteAttuali++;
+        }
+        return ;
     }
 }

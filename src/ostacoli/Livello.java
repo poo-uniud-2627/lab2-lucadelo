@@ -6,5 +6,5 @@ package ostacoli;
  * (pixel per fotogramma, in orizzontale), di quanti pixel al massimo sbaglia il giocatore automatico,
  * e gli ostacoli nel campo. È un record: lo crea il MotoreDeiLivelli.
  */
-public record Livello(int numero, double velocitaPalla, double erroreMassimo, Ostacoli ostacoli) {
+public record Livello(int numero, double velocitaPalla, double erroreMassimo, Ostacoli ostacoli, int durataStella) {
 }
